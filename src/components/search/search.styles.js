@@ -1,7 +1,6 @@
 const SearchStyles = theme => ({
   textField: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1)
+    padding: theme.spacing(4)
   }
 });
 

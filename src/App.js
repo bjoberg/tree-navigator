@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from "react";
-import Tree from "./components/tree/tree.component";
+import Directory from "./components/directory/directory.component";
 
 import { listing } from "./data/listing";
 import Search from "./components/search/search.component";
@@ -16,7 +16,7 @@ function App() {
   return (
     <Fragment>
       <Search value={searchQuery} handleOnChange={handleTextFieldChange} />
-      <Tree data={listing} searchQuery={searchQuery} />
+      <Directory data={listing} searchQuery={searchQuery} />
     </Fragment>
   );
 }

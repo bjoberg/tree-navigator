@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
-import { TreeItem, TreeView } from "@material-ui/lab";
-import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import { Tree } from "antd";
 import clsx from "clsx";
-import shortid from "shortid";
 
-import TreeStyles from "./tree.styles";
+import DirectoryStyles from "./directory.styles";
 
-const useStyles = makeStyles(TreeStyles);
+const useStyles = makeStyles(DirectoryStyles);
+const { TreeNode } = Tree;
 
-const Tree = props => {
+const Directory = props => {
   const classes = useStyles();
   const { data, searchQuery } = props;
   const [nodes, setNodes] = useState([]);
@@ -25,21 +23,19 @@ const Tree = props => {
      * @returns {function} React element representing a single node and all of it's children
      */
     const getTree = (name = "", type = "", contents = [], query = "") => {
-      const id = shortid.generate();
       if (contents === undefined || contents.length <= 0)
         return (
-          <TreeItem
-            id={id}
-            key={id}
-            nodeId={"1"}
-            label={name}
+          <TreeNode
+            id={name}
+            key={name}
+            title={name}
             className={clsx(name.includes(searchQuery) && classes.highlight)}
           />
         );
       return (
-        <TreeItem id={id} key={id} nodeId={"1"} label={name}>
+        <TreeNode id={name} key={name} title={name}>
           {contents.map(el => getTree(el.name, el.type, el.contents))}
-        </TreeItem>
+        </TreeNode>
       );
     };
 
@@ -58,19 +54,17 @@ const Tree = props => {
     traverseData(data, searchQuery);
   }, [classes.highlight, data, searchQuery]);
 
+  if (nodes === undefined || nodes.length <= 0) {
+    return <div>Loading...</div>;
+  }
   return (
-    <TreeView
-      className={classes.root}
-      defaultExpanded={["1"]}
-      defaultCollapseIcon={<ExpandMoreIcon />}
-      defaultExpandIcon={<ChevronRightIcon />}
-    >
+    <Tree className={classes.root} defaultExpandAll>
       {nodes}
-    </TreeView>
+    </Tree>
   );
 };
 
-Tree.propTypes = {
+Directory.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string,
@@ -81,9 +75,9 @@ Tree.propTypes = {
   searchQuery: PropTypes.string
 };
 
-Tree.defaultProps = {
+Directory.defaultProps = {
   data: [],
   searchQuery: ""
 };
 
-export default Tree;
+export default Directory;
