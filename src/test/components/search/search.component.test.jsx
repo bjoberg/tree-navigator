@@ -40,6 +40,12 @@ describe("[Search]", () => {
       expect(actual).toStrictEqual(expected);
     });
 
+    it('should render <TextField /> with correct "allowClear" prop', () => {
+      const expected = true;
+      const actual = wrapper.find(Input).prop("allowClear");
+      expect(actual).toStrictEqual(expected);
+    });
+
     it('should render <TextField /> with correct "value" prop', () => {
       const expected = value;
       const actual = wrapper.find(Input).prop("value");

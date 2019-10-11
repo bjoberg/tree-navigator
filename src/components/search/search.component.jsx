@@ -14,6 +14,7 @@ const Search = props => {
   return (
     <Input
       id="search-textfield"
+      allowClear
       className={classes.textField}
       value={value}
       onChange={e => handleOnChange(e)}
