@@ -18,23 +18,23 @@ const Directory = props => {
     /**
      * Get a tree representation of node and all of it's children.
      * @param {String} name name of the tree item to be displayed
-     * @param {String} type type of the tree item to be displayed
      * @param {Array} contents of the current tree items directory tree
+     * @param {String} query string to search for within the data
      * @returns {function} React element representing a single node and all of it's children
      */
-    const getTree = (name = "", type = "", contents = [], query = "") => {
+    const getTree = (name = "", contents = [], query = "") => {
       if (contents === undefined || contents.length <= 0)
         return (
           <TreeNode
             id={name}
             key={name}
             title={name}
-            className={clsx(name.includes(searchQuery) && classes.highlight)}
+            className={clsx(name.includes(query) && classes.highlight)}
           />
         );
       return (
         <TreeNode id={name} key={name} title={name}>
-          {contents.map(el => getTree(el.name, el.type, el.contents))}
+          {contents.map(el => getTree(el.name, el.contents, query))}
         </TreeNode>
       );
     };
@@ -42,12 +42,11 @@ const Directory = props => {
     /**
      * Traverse the provided input and set the nodes based on the traversal
      * @param {Array} input array of nodes to traverse
+     * @param {String} query string to search for within the data
      */
     const traverseData = (input, query) => {
       const temp = [];
-      input.forEach(el =>
-        temp.push(getTree(el.name, el.type, el.contents, query))
-      );
+      input.forEach(el => temp.push(getTree(el.name, el.contents, query)));
       setNodes(temp);
     };
 
