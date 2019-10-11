@@ -2,7 +2,7 @@
 
 This project is a single page application that parses a json tree and visually represents its structure. Along with this, a user can search through the tree for any child node.
 
-// TODO: Record giphy
+![Tree Navigator](./src/media/tree-navigator.gif)
 
 ## Local Setup
 
